@@ -1,0 +1,587 @@
+{
+	"info": {
+		"_postman_id": "ff521764-5921-4c95-aaa2-6a4debdfae3c",
+		"name": "Tinderleaked",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4587395"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.http_code).to.exist;",
+									"    pm.expect(responseData.http_status).to.exist;",
+									"    pm.expect(responseData.message_code).to.exist;",
+									"    pm.expect(responseData.message).to.exist;",
+									"    pm.expect(responseData.data).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data field should be an array\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.data).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{baPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{baUsername}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"immanuel\",\n    \"email\" : \"immanuel@gmail.com\",\n    \"password\" : \"123456\",\n    \"gender\" : \"male\",\n    \"date_of_birthday\" : \"1998-01-16 00:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/auth/register",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.http_code).to.exist;",
+									"    pm.expect(responseData.message).to.exist;",
+									"    pm.expect(responseData.data).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object contains expected fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data).to.be.an('object');",
+									"    pm.expect(responseData.data).to.have.property('name');",
+									"    pm.expect(responseData.data).to.have.property('email');",
+									"    pm.expect(responseData.data).to.have.property('gender');",
+									"    pm.expect(responseData.data).to.have.property('date_of_birthday');",
+									"    pm.expect(responseData.data).to.have.property('token');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{baPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{baUsername}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"immanuel@gmail.com\",\n    \"password\" : \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/auth/login",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Packages",
+			"item": [
+				{
+					"name": "Get All Package",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is within an acceptable range\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"    ",
+									"    responseData.data.forEach(function(packageData) {",
+									"        pm.expect(packageData).to.include.all.keys('id', 'package_name', 'package_price', 'package_duration_days', 'status');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Package_price is a non-negative number\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"    responseData.data.forEach(function(package) {",
+									"        pm.expect(package.package_price).to.be.a('number').and.to.be.at.least(0);",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Package_duration_days is a non-negative integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"    responseData.data.forEach(function(package) {",
+									"        pm.expect(package.package_duration_days).to.be.a('number').and.to.be.at.least(0);",
+									"    });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc2MTUwNDMsInVzZXJfaWQiOiJcdTAwMDEiLCJ1c2VybmFtZSI6ImltbWFudWVsQGdtYWlsLmNvbSJ9.iqEHMwGxUOp4nlpw6QSeeBws2LOyQTq--IWb5lDVDSs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/packages/all",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"packages",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Package",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is within an acceptable range\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.http_code).to.exist;",
+									"    pm.expect(responseData.message).to.exist;",
+									"    pm.expect(responseData).to.have.property(\"data\");",
+									"    if(responseData.data !== null) {",
+									"        // If responseData.data exists, check if it's not null",
+									"        pm.expect(responseData.data).to.exist;",
+									"    }",
+									"});",
+									"",
+									"",
+									"pm.test(\"Http code is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.http_code).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/packages/my",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"packages",
+								"my"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buy Package",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 400\", function () {",
+									"    pm.expect(pm.response.code).to.equal(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.http_code).to.exist;",
+									"    pm.expect(responseData.message).to.exist;",
+									"    pm.expect(responseData.data).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is within acceptable range\", function () {",
+									"    var responseTime = parseFloat(pm.response.responseTime);",
+									"    pm.expect(responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the response content type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response data field should be an array\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"package_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/packages/buy",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"packages",
+								"buy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Viewable User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields - id, name, email, gender, and date_of_birthday\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    _.each(responseData.data, function (user) {",
+									"        // Check if the user object contains the required fields",
+									"        pm.expect(user).to.have.property(\"id\");",
+									"        pm.expect(user).to.have.property(\"name\");",
+									"        pm.expect(user).to.have.property(\"email\");",
+									"        pm.expect(user).to.have.property(\"gender\");",
+									"        pm.expect(user).to.have.property(\"date_of_birthday\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Email is in a valid format\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"    responseData.data.forEach(function (user) {",
+									"        pm.expect(user.email).to.match(/^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$/);",
+									"    });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/users/viewable-user",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"users",
+								"viewable-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Action",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"",
+									"    var responseTime = parseFloat(pm.response.responseTime);",
+									"    pm.expect(responseTime).to.be.below(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.http_code).to.exist;",
+									"    pm.expect(responseData.message).to.exist;",
+									"    pm.expect(responseData.data).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Http_code is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.http_code).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Http_code should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data is an array\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"host_id\": 32,\n    \"visitor_action\": \"pass\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/users/action",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"users",
+								"action"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

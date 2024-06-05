@@ -34,3 +34,5 @@ go run main.go
 ```
 
 Open [http://localhost:{SERVICE_PORT}](http://localhost:{SERVICE_PORT}) with your browser to see the result.
+
+you can access API documentation for this project in here [Documentation](https://documenter.getpostman.com/view/4587395/2sA3QzYnvR), or the postman.collection in this repository
