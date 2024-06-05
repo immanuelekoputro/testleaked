@@ -35,7 +35,8 @@ func (repo *sqlRepository) CountViewed(userId int) (int64, error) {
 func (repo *sqlRepository) FetchUserHasNotViewed(userId, limit int) (*[]authModel.ResponseUser, error) {
 	var user []authModel.ResponseUser
 
-	query := fmt.Sprintf("select users.id as id, users.name as name, users.email as email, users.gender as gender, DATE_FORMAT(users.date_of_birthday,%s) as date_of_birthday from users left join user_view_histories uvh on users.id = uvh.visitor_user_id where users.id not in (select host_user_id as id from user_view_histories where user_view_histories.visitor_user_id = %d and DATE(created_at) = DATE(NOW())) and users.id != %d limit %d", "'%Y-%m-%d %H:%i:%s'", userId, userId, limit)
+	//query := fmt.Sprintf("select users.id as id, users.name as name, users.email as email, users.gender as gender, DATE_FORMAT(users.date_of_birthday,%s) as date_of_birthday from users left join user_view_histories uvh on users.id = uvh.visitor_user_id where users.id not in (select host_user_id as id from user_view_histories where user_view_histories.visitor_user_id = %d and DATE(created_at) = DATE(NOW())) and users.id != %d limit %d", "'%Y-%m-%d %H:%i:%s'", userId, userId, limit)
+	query := fmt.Sprintf("select users.id as id, users.name as name, users.email as email, users.gender as gender, DATE_FORMAT(users.date_of_birthday,%s) as date_of_birthday, case when (select vus.package_id from vw_user_subscribes vus where vus.subscribe_status = 1 and vus.user_id = users.id and vus.package_id = 2) then true else false end as is_verified_user from users left join user_view_histories uvh on users.id = uvh.visitor_user_id where users.id not in (select host_user_id as id from user_view_histories where user_view_histories.visitor_user_id = %d and DATE(created_at) = DATE(NOW())) and users.id != %d limit %d", "'%Y-%m-%d %H:%i:%s'", userId, userId, limit)
 	err := repo.Conn.Raw(query).Scan(&user).Error
 	if err != nil {
 		log.Error().Msg("[Error] : " + err.Error())

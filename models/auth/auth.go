@@ -28,6 +28,7 @@ type ResponseUser struct {
 	Email          string `json:"email"`
 	Gender         string `json:"gender"`
 	DateOfBirthday string `json:"date_of_birthday"`
+	IsVerifiedUser bool   `json:"is_verified_user"`
 }
 
 type ResponseLogin struct {
